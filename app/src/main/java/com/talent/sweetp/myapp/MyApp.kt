@@ -12,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.talent.sweetp.viewmodel.SharedViewModel
+import com.talent.sweetp.views.LoginScreen
 import com.talent.sweetp.views.ScreenFour
 import com.talent.sweetp.views.ScreenOne
 import com.talent.sweetp.views.ScreenThree
@@ -22,7 +23,8 @@ fun MyApp() {
     val navController = rememberNavController()
     val sharedViewModel: SharedViewModel = viewModel()
 
-    NavHost(navController = navController, startDestination = "screenOne") {
+    NavHost(navController = navController, startDestination = "login") {
+        composable("login") { screenLoginScreen(navController, sharedViewModel) }
         composable("screenOne") { ScreenOneScreen(navController, sharedViewModel) }
         composable("screenTwo") { ScreenTwoScreen(navController, sharedViewModel) }
         composable("screenThree") { ScreenThreeScreen(navController, sharedViewModel) }
@@ -30,6 +32,15 @@ fun MyApp() {
     }
 }
 
+
+@Composable
+fun screenLoginScreen(navController: NavController, viewModel: SharedViewModel) {
+    LoginScreen(viewModel) {
+        navController.navigate("screenOne") {
+            popUpTo("login") { inclusive = true }
+        }
+    }
+}
 
 
 
