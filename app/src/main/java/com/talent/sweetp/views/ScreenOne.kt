@@ -10,6 +10,16 @@ import com.talent.sweetp.viewmodel.SharedViewModel
 @Composable
 fun ScreenOne(viewModel: SharedViewModel) {
     Column {
+
+        Button(onClick = { viewModel.fetchRandomQuote() }) {
+            Text("Fetch Random Quote")
+        }
+
+        viewModel.quote.value?.let { quote ->
+            Text(text = "Quote: ${quote.content}")
+            Text(text = "Author: ${quote.author}")
+        }
+
         Text(text = viewModel.sharedText.value)
         Button(onClick = { viewModel.updateText("Updated from Screen One") }) {
             Text("Update Text")
