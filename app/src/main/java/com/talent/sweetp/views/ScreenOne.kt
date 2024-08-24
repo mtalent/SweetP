@@ -20,9 +20,6 @@ fun ScreenOne(viewModel: SharedViewModel) {
             Text(text = "Author: ${quote.author}")
         }
 
-        Text(text = viewModel.sharedText.value)
-        Button(onClick = { viewModel.updateText("Updated from Screen One") }) {
-            Text("Update Text")
-        }
+
     }
 }
