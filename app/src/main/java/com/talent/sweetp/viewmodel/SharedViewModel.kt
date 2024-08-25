@@ -16,12 +16,15 @@ class SharedViewModel : ViewModel() {
     var username = mutableStateOf("")
     var password = mutableStateOf("")
     var quote = mutableStateOf<Quote?>(null)
+    var quoteList = mutableStateOf<List<Quote>>(emptyList())
+    var selectedQuote = mutableStateOf<Quote?>(null)
 
     private val repository: QuoteRepository
 
     init {
         val apiService = QuoteApiService.create()
         repository = QuoteRepository(apiService)
+        fetchQuotes(1)
     }
 
     fun updateText(newText: String) {
@@ -44,6 +47,33 @@ class SharedViewModel : ViewModel() {
                 // Handle error
             }
         }
+    }
+
+    fun fetchQuotes(page: Int) {
+        viewModelScope.launch {
+            val response = repository.getQuotesByPage(page)
+            if (response.isSuccessful) {
+                quoteList.value = response.body()?.results ?: emptyList()
+            } else {
+                // Handle error
+            }
+        }
+    }
+
+    fun fetchQuoteById(id: String) {
+        viewModelScope.launch {
+            val response = repository.getQuoteById(id)
+            if (response.isSuccessful) {
+                selectedQuote.value = response.body()
+            } else {
+                // Handle error
+            }
+        }
+    }
+
+    // Reset selected quote
+    fun resetSelectedQuote() {
+        selectedQuote.value = null
     }
 
 }
