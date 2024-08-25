@@ -1,11 +1,19 @@
 package com.talent.sweetp.myapp
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -46,13 +54,35 @@ fun screenLoginScreen(navController: NavController, viewModel: SharedViewModel) 
 
 @Composable
 fun ScreenOneScreen(navController: NavController, viewModel: SharedViewModel) {
-    Column {
-        ScreenOne(viewModel)
-        Button(onClick = { navController.navigate("screenTwo") }, modifier = Modifier.fillMaxWidth()) {
-            Text("Go to Screen Two")
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        // ScreenOne content
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            ScreenOne(viewModel)
+        }
+
+        // Navigation Button
+        Button(
+            onClick = { navController.navigate("screenTwo") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp)
+                .height(50.dp)
+        ) {
+            Text(text = "Go to Screen Two", fontSize = 18.sp)
         }
     }
 }
+
+
 
 @Composable
 fun ScreenTwoScreen(navController: NavController, viewModel: SharedViewModel) {
