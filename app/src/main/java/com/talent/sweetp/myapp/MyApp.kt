@@ -25,6 +25,7 @@ import com.talent.sweetp.views.ScreenFour
 import com.talent.sweetp.views.ScreenOne
 import com.talent.sweetp.views.ScreenThree
 import com.talent.sweetp.views.ScreenTwo
+import com.talent.sweetp.views.SelectedQuote
 
 @Composable
 fun MyApp() {
@@ -91,14 +92,20 @@ fun ScreenTwoScreen(navController: NavController, viewModel: SharedViewModel) {
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        // ScreenTwo content
+        // Conditional content: show either the list or the selected quote
         Box(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth(),
-            contentAlignment = Alignment.TopCenter
+            contentAlignment = Alignment.Center
         ) {
-            ScreenTwo(viewModel)
+            if (viewModel.selectedQuote.value == null) {
+                // Show the list of quotes
+                ScreenTwo(viewModel)
+            } else {
+                // Show the selected quote
+                SelectedQuote(viewModel.selectedQuote.value!!)
+            }
         }
 
         // Navigation Button
@@ -113,6 +120,7 @@ fun ScreenTwoScreen(navController: NavController, viewModel: SharedViewModel) {
         }
     }
 }
+
 
 @Composable
 fun ScreenThreeScreen(navController: NavController, viewModel: SharedViewModel) {
