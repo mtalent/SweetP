@@ -86,10 +86,30 @@ fun ScreenOneScreen(navController: NavController, viewModel: SharedViewModel) {
 
 @Composable
 fun ScreenTwoScreen(navController: NavController, viewModel: SharedViewModel) {
-    Column {
-        ScreenTwo(viewModel)
-        Button(onClick = { navController.navigate("screenThree") }, modifier = Modifier.fillMaxWidth()) {
-            Text("Go to Screen Three")
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        // ScreenTwo content
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
+            contentAlignment = Alignment.TopCenter
+        ) {
+            ScreenTwo(viewModel)
+        }
+
+        // Navigation Button
+        Button(
+            onClick = { navController.navigate("screenThree") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp)
+                .height(50.dp)
+        ) {
+            Text(text = "Go to Screen Three", fontSize = 18.sp)
         }
     }
 }
