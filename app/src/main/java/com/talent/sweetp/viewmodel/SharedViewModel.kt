@@ -71,4 +71,9 @@ class SharedViewModel : ViewModel() {
         }
     }
 
+    // Reset selected quote
+    fun resetSelectedQuote() {
+        selectedQuote.value = null
+    }
+
 }

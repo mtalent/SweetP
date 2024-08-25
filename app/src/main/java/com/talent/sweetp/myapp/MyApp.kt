@@ -110,7 +110,9 @@ fun ScreenTwoScreen(navController: NavController, viewModel: SharedViewModel) {
 
         // Navigation Button
         Button(
-            onClick = { navController.navigate("screenThree") },
+            onClick = {
+                viewModel.resetSelectedQuote()  // Reset the selection
+                navController.navigate("screenThree") },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 16.dp)
