@@ -5,7 +5,7 @@ I have used a free API to show the capabilities of MVVM using Compose Navigation
 Package MyApp contains Compose Navigation Functions
 
 
-# Login Screnn uses Firebase Auth for user authorization must register before logging in
+# Login Screen uses Firebase Auth for user authorization must register before logging in
 
 # Page one will display a random quote from the quote api on the push of a button
 
