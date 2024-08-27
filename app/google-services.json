@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "983344760018",
+    "project_id": "sweetp-6e917",
+    "storage_bucket": "sweetp-6e917.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:983344760018:android:c4e3a459f2c92b1535990b",
+        "android_client_info": {
+          "package_name": "com.talent.sweetp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVp8ZdbvVN_dcVupOuyvUdBxbqbY54As4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

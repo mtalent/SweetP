@@ -63,6 +63,25 @@ fun LoginScreen(viewModel: SharedViewModel, onLoginSuccess: () -> Unit) {
             ) {
                 Text(text = "Login")
             }
+
+            // Register Button
+            Button(
+                onClick = { viewModel.registerUser(onLoginSuccess) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp)
+            ) {
+                Text(text = "Register")
+            }
+
+            // Display any authentication error messages
+            viewModel.authError.value?.let { errorMessage ->
+                Text(
+                    text = errorMessage,
+                    color = Color.Red,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
         }
     }
 }

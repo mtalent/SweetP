@@ -22,10 +22,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.talent.sweetp" />
+                  <option name="mobileSdkAppId" value="1:983344760018:android:c4e3a459f2c92b1535990b" />
+                  <option name="projectId" value="sweetp-6e917" />
+                  <option name="projectNumber" value="983344760018" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
