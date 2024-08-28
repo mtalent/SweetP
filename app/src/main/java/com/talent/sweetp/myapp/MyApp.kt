@@ -2,6 +2,7 @@ package com.talent.sweetp.myapp
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -51,8 +52,6 @@ fun screenLoginScreen(navController: NavController, viewModel: SharedViewModel) 
     }
 }
 
-
-
 @Composable
 fun ScreenOneScreen(navController: NavController, viewModel: SharedViewModel) {
     Column(
@@ -70,20 +69,30 @@ fun ScreenOneScreen(navController: NavController, viewModel: SharedViewModel) {
             ScreenOne(viewModel)
         }
 
-        // Navigation Button
-        Button(
-            onClick = { navController.navigate("screenTwo") },
+        // Navigation Buttons: Previous (disabled) and Next
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 16.dp)
-                .height(50.dp)
+                .height(50.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "Go to Screen Two", fontSize = 18.sp)
+            Button(
+                onClick = { /* No previous screen for Screen One */ },
+                enabled = false,
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = "Previous", fontSize = 18.sp)
+            }
+            Button(
+                onClick = { navController.navigate("screenTwo") },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = "Next", fontSize = 18.sp)
+            }
         }
     }
 }
-
-
 
 @Composable
 fun ScreenTwoScreen(navController: NavController, viewModel: SharedViewModel) {
@@ -108,21 +117,32 @@ fun ScreenTwoScreen(navController: NavController, viewModel: SharedViewModel) {
             }
         }
 
-        // Navigation Button
-        Button(
-            onClick = {
-                viewModel.resetSelectedQuote()  // Reset the selection
-                navController.navigate("screenThree") },
+        // Navigation Buttons: Previous and Next
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 16.dp)
-                .height(50.dp)
+                .height(50.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "Go to Screen Three", fontSize = 18.sp)
+            Button(
+                onClick = { navController.navigate("screenOne") },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = "Previous", fontSize = 18.sp)
+            }
+            Button(
+                onClick = {
+                    viewModel.resetSelectedQuote()  // Reset the selection
+                    navController.navigate("screenThree")
+                },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = "Next", fontSize = 18.sp)
+            }
         }
     }
 }
-
 
 @Composable
 fun ScreenThreeScreen(navController: NavController, viewModel: SharedViewModel) {
@@ -141,25 +161,68 @@ fun ScreenThreeScreen(navController: NavController, viewModel: SharedViewModel) 
             ScreenThree(viewModel)
         }
 
-        // Navigation Button to Screen Four
-        Button(
-            onClick = { navController.navigate("screenFour") },
+        // Navigation Buttons: Previous and Next
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 16.dp)
-                .height(50.dp)
+                .height(50.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "Go to Screen Four", fontSize = 18.sp)
+            Button(
+                onClick = { navController.navigate("screenTwo") },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = "Previous", fontSize = 18.sp)
+            }
+            Button(
+                onClick = { navController.navigate("screenFour") },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = "Next", fontSize = 18.sp)
+            }
         }
     }
 }
 
 @Composable
 fun ScreenFourScreen(navController: NavController, viewModel: SharedViewModel) {
-    Column {
-        ScreenFour(viewModel)
-        Button(onClick = { navController.navigate("screenOne") }, modifier = Modifier.fillMaxWidth()) {
-            Text("Go to Screen One")
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        // ScreenFour content
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            ScreenFour(viewModel)
+        }
+
+        // Navigation Buttons: Previous and Next (disabled)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp)
+                .height(50.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Button(
+                onClick = { navController.navigate("screenThree") },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = "Previous", fontSize = 18.sp)
+            }
+            Button(
+                onClick = { /* No next screen for Screen Four */ },
+                enabled = false,
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = "Next", fontSize = 18.sp)
+            }
         }
     }
 }
