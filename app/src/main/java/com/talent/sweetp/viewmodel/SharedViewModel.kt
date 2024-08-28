@@ -8,9 +8,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.talent.sweetp.api.QuoteApiService
+import com.talent.sweetp.api.ApiService
+import com.talent.sweetp.model.Joke
 import com.talent.sweetp.model.Quote
-import com.talent.sweetp.repository.QuoteRepository
+import com.talent.sweetp.repository.Repository
 import kotlinx.coroutines.launch
 
 class SharedViewModel : ViewModel() {
@@ -22,20 +23,33 @@ class SharedViewModel : ViewModel() {
     var selectedQuote = mutableStateOf<Quote?>(null)
     var user = mutableStateOf<FirebaseUser?>(null)
     var authError = mutableStateOf<String?>(null)
+    var joke = mutableStateOf<Joke?>(null)
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     //private val database = FirebaseDatabase.getInstance().reference
 
-    private val repository: QuoteRepository
+    private val repository: Repository
 
     init {
-        val apiService = QuoteApiService.create()
-        repository = QuoteRepository(apiService)
+        val apiService = ApiService.createQuoteApi()
+        val jokeApiService = ApiService.createJokeApi()
+        repository = Repository(apiService, jokeApiService)
         fetchQuotes(1)
     }
 
     fun updateText(newText: String) {
         sharedText.value = newText
+    }
+
+    fun fetchRandomJoke() {
+        viewModelScope.launch {
+            val response = repository.getRandomJoke()
+            if (response.isSuccessful) {
+                joke.value = response.body()
+            } else {
+                // Handle error
+            }
+        }
     }
 
     fun fetchRandomQuote() {
