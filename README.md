@@ -1,6 +1,6 @@
-# Example of MVVM with Repository Pattern Using Compose for UI and Navigation (work in progress)
+# Example of MVVM with Repository Pattern Using Compose for UI and Navigation using multiple API's
 
-I have used a free API to show the capabilities of MVVM using Compose Navigation.
+I have used two seperate free API's to show the capabilities of MVVM using Compose Navigation.
 
 Package MyApp contains Compose Navigation Functions
 
@@ -10,6 +10,8 @@ Package MyApp contains Compose Navigation Functions
 # Page one will display a random quote from the quote api on the push of a button
 
 # Page two displays a vertically scrolling list of quotes that will display the selected quote from the list
+
+# Page three displays a random joke from the joke api on the push of a button
 
 All code and configuration created completely by Mark Talent
 
