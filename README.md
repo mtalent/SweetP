@@ -1,6 +1,6 @@
 # Example of MVVM with Repository Pattern Using Compose for UI and Navigation accessing multiple API's
 
-I have used two seperate free API's to show the capabilities of MVVM using Compose Navigation.
+I have used three seperate free API's to show the capabilities of MVVM using Compose Navigation.
 
 All code and configuration created completely by Mark Talent - mtalent@live.com
 
