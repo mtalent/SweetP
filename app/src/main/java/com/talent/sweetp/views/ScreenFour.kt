@@ -2,7 +2,7 @@ package com.talent.sweetp.views
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,13 +30,16 @@ fun ScreenFour(viewModel: SharedViewModel) {
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
-            it.incorrect_answers.plus(it.correct_answer).shuffled().forEach { answer ->
+            val shuffledAnswers = remember(it) { it.incorrect_answers.plus(it.correct_answer).shuffled() }
+
+            shuffledAnswers.forEach { answer ->
+                val isCorrectAnswer = answer == it.correct_answer
                 Button(
                     onClick = {
                         viewModel.selectedAnswer.value = answer
                         viewModel.checkAnswer(answer)
                     },
-                    enabled = selectedAnswer == null,
+                    enabled = selectedAnswer == null || isAnswerCorrect == false,
                     modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
                 ) {
                     Text(text = answer)
@@ -45,7 +48,7 @@ fun ScreenFour(viewModel: SharedViewModel) {
 
             isAnswerCorrect?.let { correct ->
                 Text(
-                    text = if (correct) "Correct!" else "Incorrect!",
+                    text = if (correct) "Correct! You can proceed to the next question." else "Incorrect! Please try again.",
                     fontSize = 18.sp,
                     color = if (correct) Color.Green else Color.Red,
                     modifier = Modifier.padding(vertical = 16.dp)
@@ -54,7 +57,7 @@ fun ScreenFour(viewModel: SharedViewModel) {
 
             Button(
                 onClick = { viewModel.nextQuestion() },
-                enabled = selectedAnswer != null,
+                enabled = isAnswerCorrect == true,
                 modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
             ) {
                 Text(text = "Next Question")

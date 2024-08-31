@@ -192,11 +192,7 @@ fun ScreenThreeScreen(navController: NavController, viewModel: SharedViewModel) 
 @Composable
 fun ScreenFourScreen(navController: NavController, viewModel: SharedViewModel) {
 
-    /*
-    LaunchedEffect(Unit) {
-        viewModel.fetchTriviaQuestions()
-    }
-*/
+
     Column(
         modifier = Modifier
             .fillMaxSize()
