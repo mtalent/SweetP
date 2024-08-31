@@ -4,9 +4,14 @@ import com.talent.sweetp.api.ApiService
 import com.talent.sweetp.model.Joke
 import com.talent.sweetp.model.Quote
 import com.talent.sweetp.model.QuoteList
+import com.talent.sweetp.model.TriviaResponse
 import retrofit2.Response
 
-class Repository(private val apiService: ApiService,  private val jokeApiService: ApiService) {
+class Repository(
+    private val apiService: ApiService,
+    private val jokeApiService: ApiService,
+    private val triviaApiService: ApiService
+) {
     suspend fun getRandomQuote(): Response<Quote> {
         return apiService.getRandomQuote()
     }
@@ -21,5 +26,9 @@ class Repository(private val apiService: ApiService,  private val jokeApiService
 
     suspend fun getRandomJoke(): Response<Joke> {
         return jokeApiService.getRandomJoke()
+    }
+
+    suspend fun getTriviaQuestions(): Response<TriviaResponse> {
+        return triviaApiService.getTriviaQuestions()
     }
 }

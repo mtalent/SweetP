@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -96,6 +97,9 @@ fun ScreenOneScreen(navController: NavController, viewModel: SharedViewModel) {
 
 @Composable
 fun ScreenTwoScreen(navController: NavController, viewModel: SharedViewModel) {
+    LaunchedEffect(Unit) {
+        viewModel.resetSelectedQuote()
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -134,7 +138,7 @@ fun ScreenTwoScreen(navController: NavController, viewModel: SharedViewModel) {
             Button(
                 onClick = {
                     navController.navigate("screenThree")
-                    viewModel.resetSelectedQuote()  // Reset the selection
+                    //viewModel.resetSelectedQuote()
                 },
                 modifier = Modifier.weight(1f)
             ) {
@@ -187,12 +191,18 @@ fun ScreenThreeScreen(navController: NavController, viewModel: SharedViewModel) 
 
 @Composable
 fun ScreenFourScreen(navController: NavController, viewModel: SharedViewModel) {
+
+    /*
+    LaunchedEffect(Unit) {
+        viewModel.fetchTriviaQuestions()
+    }
+*/
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        // ScreenFour content
+        // ScreenFour content (Trivia Game)
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -226,3 +236,4 @@ fun ScreenFourScreen(navController: NavController, viewModel: SharedViewModel) {
         }
     }
 }
+

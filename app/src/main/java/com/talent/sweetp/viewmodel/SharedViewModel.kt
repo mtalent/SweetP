@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.talent.sweetp.api.ApiService
 import com.talent.sweetp.model.Joke
 import com.talent.sweetp.model.Quote
+import com.talent.sweetp.model.TriviaQuestion
 import com.talent.sweetp.repository.Repository
 import kotlinx.coroutines.launch
 
@@ -25,6 +26,11 @@ class SharedViewModel : ViewModel() {
     var authError = mutableStateOf<String?>(null)
     var joke = mutableStateOf<Joke?>(null)
 
+    var triviaQuestions = mutableStateOf<List<TriviaQuestion>>(emptyList())
+    var currentQuestionIndex = mutableStateOf(0)
+    var selectedAnswer = mutableStateOf<String?>(null)
+    var isAnswerCorrect = mutableStateOf<Boolean?>(null)
+
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     //private val database = FirebaseDatabase.getInstance().reference
 
@@ -33,8 +39,10 @@ class SharedViewModel : ViewModel() {
     init {
         val apiService = ApiService.createQuoteApi()
         val jokeApiService = ApiService.createJokeApi()
-        repository = Repository(apiService, jokeApiService)
+        val triviaApiService = ApiService.createTriviaApi()
+        repository = Repository(apiService, jokeApiService, triviaApiService)
         fetchQuotes(1)
+       fetchTriviaQuestions()
     }
 
     fun updateText(newText: String) {
@@ -130,6 +138,33 @@ class SharedViewModel : ViewModel() {
     fun signOut() {
         auth.signOut()
         user.value = null
+    }
+
+    fun fetchTriviaQuestions() {
+        viewModelScope.launch {
+            val response = repository.getTriviaQuestions()
+            if (response.isSuccessful) {
+                triviaQuestions.value = response.body()?.results ?: emptyList()
+                currentQuestionIndex.value = 0
+                selectedAnswer.value = null
+                isAnswerCorrect.value = null
+            } else {
+                // Handle error
+            }
+        }
+    }
+
+    fun checkAnswer(selected: String) {
+        val correctAnswer = triviaQuestions.value[currentQuestionIndex.value].correct_answer
+        isAnswerCorrect.value = selected == correctAnswer
+    }
+
+    fun nextQuestion() {
+        if (currentQuestionIndex.value < triviaQuestions.value.size - 1) {
+            currentQuestionIndex.value += 1
+            selectedAnswer.value = null
+            isAnswerCorrect.value = null
+        }
     }
 
 }
