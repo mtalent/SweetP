@@ -13,7 +13,9 @@ Package MyApp contains Compose Navigation Functions
 
 # Page two displays a vertically scrolling list of quotes that will display the selected quote from the list
 
-# Page three displays a random joke from the joke api on the push of a button
+# Page three displays a random joke from a second joke api on the push of a button
+
+# Page four has a multiple choice trivia game from a third trivia API
 
 <sub>Started the application last month as a four-page game, then decided to just make it a coding example for possible employers (hence the sweetp package).</sub>
 
