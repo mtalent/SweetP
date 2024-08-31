@@ -126,15 +126,15 @@ fun ScreenTwoScreen(navController: NavController, viewModel: SharedViewModel) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Button(
-                onClick = { navController.navigate("screenOne") },
+                onClick = { navController.popBackStack() },
                 modifier = Modifier.weight(1f)
             ) {
                 Text(text = "Previous", fontSize = 18.sp)
             }
             Button(
                 onClick = {
-                    viewModel.resetSelectedQuote()  // Reset the selection
                     navController.navigate("screenThree")
+                    viewModel.resetSelectedQuote()  // Reset the selection
                 },
                 modifier = Modifier.weight(1f)
             ) {
@@ -170,7 +170,7 @@ fun ScreenThreeScreen(navController: NavController, viewModel: SharedViewModel) 
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Button(
-                onClick = { navController.navigate("screenTwo") },
+                onClick = { navController.popBackStack() },
                 modifier = Modifier.weight(1f)
             ) {
                 Text(text = "Previous", fontSize = 18.sp)
@@ -211,7 +211,7 @@ fun ScreenFourScreen(navController: NavController, viewModel: SharedViewModel) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Button(
-                onClick = { navController.navigate("screenThree") },
+                onClick = { navController.popBackStack() },
                 modifier = Modifier.weight(1f)
             ) {
                 Text(text = "Previous", fontSize = 18.sp)
