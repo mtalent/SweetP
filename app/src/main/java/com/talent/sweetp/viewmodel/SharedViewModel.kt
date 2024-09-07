@@ -41,7 +41,7 @@ class SharedViewModel : ViewModel() {
         val jokeApiService = ApiService.createJokeApi()
         val triviaApiService = ApiService.createTriviaApi()
         repository = Repository(apiService, jokeApiService, triviaApiService)
-        fetchQuotes(1)
+        fetchQuotes(5)
        fetchTriviaQuestions()
     }
 

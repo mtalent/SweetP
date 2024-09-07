@@ -55,9 +55,9 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit2.converter.gson)
 
-    implementation (platform("com.google.firebase:firebase-bom:32.2.3"))
-    implementation ("com.google.firebase:firebase-auth-ktx")
-    implementation ("com.google.android.gms:play-services-auth:20.6.0") // For Google Sign-In
+    implementation (platform(libs.firebase.bom.v3223))
+    implementation (libs.google.firebase.auth.ktx)
+    implementation (libs.play.services.auth) // For Google Sign-In
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -68,8 +68,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
-    //implementation(libs.firebase.auth.ktx)
-    //implementation(libs.firebase.auth)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
