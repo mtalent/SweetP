@@ -22,6 +22,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.talent.sweetp.viewmodel.SharedViewModel
+import com.talent.sweetp.views.BlackjackTable
 import com.talent.sweetp.views.LoginScreen
 import com.talent.sweetp.views.ScreenFour
 import com.talent.sweetp.views.ScreenOne
@@ -40,6 +41,7 @@ fun MyApp() {
         composable("screenTwo") { ScreenTwoScreen(navController, sharedViewModel) }
         composable("screenThree") { ScreenThreeScreen(navController, sharedViewModel) }
         composable("screenFour") { ScreenFourScreen(navController, sharedViewModel) }
+        composable("blackJackScreen") {BlackjackScreen(navController, sharedViewModel)}
     }
 }
 
@@ -223,6 +225,53 @@ fun ScreenFourScreen(navController: NavController, viewModel: SharedViewModel) {
                 Text(text = "Previous", fontSize = 18.sp)
             }
             Button(
+                onClick = { navController.navigate("blackJackScreen") },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = "Next", fontSize = 18.sp)
+            }
+        }
+    }
+}
+
+@Composable
+fun BlackjackScreen(navController: NavController, viewModel: SharedViewModel) {
+
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        // ScreenFour content (Trivia Game)
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            // Retrieve the cards from the ViewModel
+            val playerCards = viewModel.playerCards.value
+            val dealerCards = viewModel.dealerCards.value
+
+            BlackjackTable(playerCards, dealerCards)
+        }
+
+        // Navigation Buttons: Previous and Next (disabled)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp)
+                .height(50.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Button(
+                onClick = { navController.popBackStack() },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = "Previous", fontSize = 18.sp)
+            }
+            Button(
                 onClick = { /* No next screen for Screen Four */ },
                 enabled = false,
                 modifier = Modifier.weight(1f)
@@ -231,5 +280,8 @@ fun ScreenFourScreen(navController: NavController, viewModel: SharedViewModel) {
             }
         }
     }
+
+
+
 }
 

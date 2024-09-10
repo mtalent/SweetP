@@ -3,6 +3,7 @@ package com.talent.sweetp.viewmodel
 // SharedViewModel.kt
 
 
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,9 +28,15 @@ class SharedViewModel : ViewModel() {
     var joke = mutableStateOf<Joke?>(null)
 
     var triviaQuestions = mutableStateOf<List<TriviaQuestion>>(emptyList())
-    var currentQuestionIndex = mutableStateOf(0)
+    var currentQuestionIndex = mutableIntStateOf(0)
     var selectedAnswer = mutableStateOf<String?>(null)
     var isAnswerCorrect = mutableStateOf<Boolean?>(null)
+    var playerCards = mutableStateOf<List<String>>(emptyList())
+        private set
+
+    var dealerCards = mutableStateOf<List<String>>(emptyList())
+        private set
+    var allCards = initializeDeck()
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     //private val database = FirebaseDatabase.getInstance().reference
@@ -42,8 +49,15 @@ class SharedViewModel : ViewModel() {
         val triviaApiService = ApiService.createTriviaApi()
         repository = Repository(apiService, jokeApiService, triviaApiService)
         fetchQuotes(5)
-       fetchTriviaQuestions()
+        fetchTriviaQuestions()
+        dealInitialCards()
+
+
     }
+
+
+
+
 
     fun updateText(newText: String) {
         sharedText.value = newText
@@ -166,5 +180,44 @@ class SharedViewModel : ViewModel() {
             isAnswerCorrect.value = null
         }
     }
+
+
+    // Holds the state of the cards for both player and dealer
+
+
+    // Function to initialize or shuffle a new hand
+    fun dealInitialCards() {
+        playerCards.value = allCards.take(2) // Assign first two cards to player
+        dealerCards.value = allCards.takeLast(2) // Assign last two cards to dealer
+    }
+
+    fun initializeDeck(deck: MutableList<String> = mutableListOf<String>()) : MutableList<String> {
+        val suits = listOf("hearts", "diamonds", "clubs", "spades")
+        val faceCards = listOf("jack", "queen", "king")
+
+        // Loop through suits
+        for (suit in suits) {
+            // Loop through number cards 1 to 10
+            for (value in 1..10) {
+                val cardName = "${value}_of_$suit"
+                val cardUrl = "http://kotliniskool.com/cards/${cardName.trim()}.png".trim()
+                deck.add(cardUrl)
+            }
+            // Loop through face cards
+            for (face in faceCards) {
+                val cardName = "${face}_of_$suit"
+                val cardUrl = "http://kotliniskool.com/cards/${cardName.trim()}.png".trim()
+                deck.add(cardUrl)
+            }
+        }
+
+        // Shuffle the deck before returning
+        deck.shuffle()
+
+        return deck
+    }
+
+
+
 
 }
