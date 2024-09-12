@@ -23,9 +23,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.talent.sweetp" />
-                  <option name="mobileSdkAppId" value="1:983344760018:android:c4e3a459f2c92b1535990b" />
-                  <option name="projectId" value="sweetp-6e917" />
-                  <option name="projectNumber" value="983344760018" />
+                  <option name="mobileSdkAppId" value="1:748215906891:android:58874cac5a94dbfcc513ce" />
+                  <option name="projectId" value="talentcodingexample" />
+                  <option name="projectNumber" value="748215906891" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

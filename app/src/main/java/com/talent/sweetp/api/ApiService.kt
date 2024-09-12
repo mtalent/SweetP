@@ -4,6 +4,7 @@ import com.talent.sweetp.model.Joke
 import com.talent.sweetp.model.Quote
 import com.talent.sweetp.model.QuoteList
 import com.talent.sweetp.model.TriviaResponse
+import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -12,6 +13,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
+
     @GET("random")
     suspend fun getRandomQuote(): Response<Quote>
 
@@ -32,28 +34,24 @@ interface ApiService {
         private const val BASE_URL_JOKES = "https://v2.jokeapi.dev/"
         private const val BASE_URL_TRIVIA = "https://opentdb.com/"
 
-        fun createQuoteApi(): ApiService {
+        private fun getUnsafeRetrofit(baseUrl: String): Retrofit {
             return Retrofit.Builder()
-                .baseUrl(BASE_URL_QUOTES)
+                .client(getUnsafeOkHttpClient())  // Use unsafe OkHttpClient
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-                .create(ApiService::class.java)
+        }
+
+        fun createQuoteApi(): ApiService {
+            return getUnsafeRetrofit(BASE_URL_QUOTES).create(ApiService::class.java)
         }
 
         fun createJokeApi(): ApiService {
-            return Retrofit.Builder()
-                .baseUrl(BASE_URL_JOKES)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(ApiService::class.java)
+            return getUnsafeRetrofit(BASE_URL_JOKES).create(ApiService::class.java)
         }
 
         fun createTriviaApi(): ApiService {
-            return Retrofit.Builder()
-                .baseUrl(BASE_URL_TRIVIA)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(ApiService::class.java)
+            return getUnsafeRetrofit(BASE_URL_TRIVIA).create(ApiService::class.java)
         }
     }
 }

@@ -54,9 +54,8 @@ android {
 dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit2.converter.gson)
-
-    implementation (platform(libs.firebase.bom.v3223))
-    implementation (libs.google.firebase.auth.ktx)
+    implementation("com.google.firebase:firebase-analytics")
+    implementation(platform("com.google.firebase:firebase-bom:33.2.0"))
     implementation (libs.play.services.auth) // For Google Sign-In
 
     implementation(libs.androidx.core.ktx)
@@ -68,6 +67,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.firebase.auth.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
