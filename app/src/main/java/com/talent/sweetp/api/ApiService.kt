@@ -15,7 +15,7 @@ import retrofit2.http.Query
 interface ApiService {
 
     @GET("random")
-    suspend fun getRandomQuote(): Response<Quote>
+    suspend fun getRandomQuote(): Response<Quote> /// gets random quote
 
     @GET("quotes")
     suspend fun getQuotesByPage(@Query("page") page: Int): Response<QuoteList>
