@@ -4,6 +4,7 @@ package com.talent.sweetp.viewmodel
 
 
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
@@ -12,6 +13,7 @@ import com.talent.sweetp.api.ApiService
 import com.talent.sweetp.model.Joke
 import com.talent.sweetp.model.Quote
 import com.talent.sweetp.model.TriviaQuestion
+import com.talent.sweetp.model.WeatherResponse
 import com.talent.sweetp.repository.Repository
 import kotlinx.coroutines.launch
 
@@ -31,16 +33,20 @@ class SharedViewModel : ViewModel() {
     var selectedAnswer = mutableStateOf<String?>(null)
     var isAnswerCorrect = mutableStateOf<Boolean?>(null)
 
+    var weatherData = mutableStateOf<WeatherResponse?>(null)
+
+
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     //private val database = FirebaseDatabase.getInstance().reference
 
     private val repository: Repository
 
     init {
-        val apiService = ApiService.createQuoteApi()
+        val weatherApiService =ApiService.createWeatherApi()
+        val quoteApiService = ApiService.createQuoteApi()
         val jokeApiService = ApiService.createJokeApi()
         val triviaApiService = ApiService.createTriviaApi()
-        repository = Repository(apiService, jokeApiService, triviaApiService)
+        repository = Repository(quoteApiService, jokeApiService, triviaApiService, weatherApiService)
         fetchQuotes(5)
        fetchTriviaQuestions()
     }
@@ -48,6 +54,23 @@ class SharedViewModel : ViewModel() {
     fun updateText(newText: String) {
         sharedText.value = newText
     }
+
+    fun fetchWeather(city: String, apiKey: String) {
+        viewModelScope.launch {
+            try {
+                val response = repository.getWeatherByCity(city, apiKey)
+                if (response != null) {
+                    weatherData.value = response // Update the weatherData with the response
+                } else {
+                    weatherData.value = null // Handle null response case
+                }
+            } catch (e: Exception) {
+                println("Error fetching weather data: ${e.localizedMessage}") // Log the error
+                weatherData.value = null // Handle error case
+            }
+        }
+    }
+
 
     fun fetchRandomJoke() {
         viewModelScope.launch {

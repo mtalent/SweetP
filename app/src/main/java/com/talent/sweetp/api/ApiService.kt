@@ -4,6 +4,7 @@ import com.talent.sweetp.model.Joke
 import com.talent.sweetp.model.Quote
 import com.talent.sweetp.model.QuoteList
 import com.talent.sweetp.model.TriviaResponse
+import com.talent.sweetp.model.WeatherResponse
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -29,10 +30,18 @@ interface ApiService {
     @GET("api.php?amount=20&category=23&difficulty=easy&type=multiple")
     suspend fun getTriviaQuestions(): Response<TriviaResponse>
 
+    @GET("data/2.5/weather")
+    suspend fun getWeatherByCity(
+        @Query("q") city: String,
+        @Query("appid") apiKey: String
+    ): WeatherResponse
+
     companion object {
         private const val BASE_URL_QUOTES = "https://api.quotable.io/"
         private const val BASE_URL_JOKES = "https://v2.jokeapi.dev/"
         private const val BASE_URL_TRIVIA = "https://opentdb.com/"
+        private const val BASE_URL_Weatther = "https://api.openweathermap.org/"
+
 
         private fun getUnsafeRetrofit(baseUrl: String): Retrofit {
             return Retrofit.Builder()
@@ -52,6 +61,10 @@ interface ApiService {
 
         fun createTriviaApi(): ApiService {
             return getUnsafeRetrofit(BASE_URL_TRIVIA).create(ApiService::class.java)
+        }
+
+        fun createWeatherApi(): ApiService {
+            return getUnsafeRetrofit(BASE_URL_Weatther).create(ApiService::class.java)
         }
     }
 }

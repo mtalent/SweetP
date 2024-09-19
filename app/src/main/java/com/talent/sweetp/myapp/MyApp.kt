@@ -27,6 +27,7 @@ import com.talent.sweetp.views.ScreenFour
 import com.talent.sweetp.views.ScreenOne
 import com.talent.sweetp.views.ScreenThree
 import com.talent.sweetp.views.ScreenTwo
+import com.talent.sweetp.views.ScreenFive
 import com.talent.sweetp.views.SelectedQuote
 
 @Composable
@@ -40,8 +41,10 @@ fun MyApp() {
         composable("screenTwo") { ScreenTwoScreen(navController, sharedViewModel) }
         composable("screenThree") { ScreenThreeScreen(navController, sharedViewModel) }
         composable("screenFour") { ScreenFourScreen(navController, sharedViewModel) }
+        composable("screenFive") { ScreenFiveScreen(navController, sharedViewModel) } // Added Screen Five
     }
 }
+
 
 
 @Composable
@@ -191,8 +194,6 @@ fun ScreenThreeScreen(navController: NavController, viewModel: SharedViewModel) 
 
 @Composable
 fun ScreenFourScreen(navController: NavController, viewModel: SharedViewModel) {
-
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -208,7 +209,7 @@ fun ScreenFourScreen(navController: NavController, viewModel: SharedViewModel) {
             ScreenFour(viewModel)
         }
 
-        // Navigation Buttons: Previous and Next (disabled)
+        // Navigation Buttons: Previous and Next
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -223,8 +224,7 @@ fun ScreenFourScreen(navController: NavController, viewModel: SharedViewModel) {
                 Text(text = "Previous", fontSize = 18.sp)
             }
             Button(
-                onClick = { /* No next screen for Screen Four */ },
-                enabled = false,
+                onClick = { navController.navigate("screenFive") }, // Navigate to Screen Five
                 modifier = Modifier.weight(1f)
             ) {
                 Text(text = "Next", fontSize = 18.sp)
@@ -232,4 +232,48 @@ fun ScreenFourScreen(navController: NavController, viewModel: SharedViewModel) {
         }
     }
 }
+
+@Composable
+fun ScreenFiveScreen(navController: NavController, viewModel: SharedViewModel) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        // Box for the ScreenFive content (weather logic)
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            ScreenFive(viewModel) // Calls ScreenFive, passing the viewModel
+        }
+
+        // Navigation Buttons: Previous and Next (Next is disabled)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp)
+                .height(50.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Button(
+                onClick = { navController.popBackStack() }, // Navigate back to Screen Four
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = "Previous", fontSize = 18.sp)
+            }
+            Button(
+                onClick = { /* No next screen for Screen Five */ },
+                enabled = false, // Next button is disabled
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = "Next", fontSize = 18.sp)
+            }
+        }
+    }
+}
+
+
 
