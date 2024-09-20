@@ -35,6 +35,6 @@ class Repository(
     }
 
     suspend fun getWeatherByCity(city: String, apiKey: String): WeatherResponse {
-        return apiService.getWeatherByCity(city, apiKey)
+        return weatherApiService.getWeatherByCity(city, apiKey)
     }
 }
